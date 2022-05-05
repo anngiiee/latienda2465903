@@ -52,7 +52,7 @@ Route::get('paises' , function() {
     $paises = [    
         "colombia" => [
             "capital" => "Bogotá",
-            "moneda" => "Peso",
+            "moneda" => "Peso colombiano",
             "población" => 51,
             "ciudades" => [
                 "Medellín",
@@ -80,17 +80,32 @@ Route::get('paises' , function() {
         "Ecuador" => [
             "capital" => "Quito",
             "moneda" => "Dólar estadounidense",
-            "población" => 17
+            "población" => 17,
+            "ciudades" => [
+                "Guayaquil",
+                "Manta"
+            ]
         ],
         "Argentina" => [
             "capital" => "Buenos aires",
             "moneda" => "Peso argentino",
-            "población" => 45
+            "población" => 45,
+            "ciudades" => [
+                "Córdoba",
+                "Rosario",
+                "Mar del Plata"
+            ]
         ],
         "Chile" => [
             "capital" => "Santiago de Chile",
             "moneda" => "Peso chileno",
-            "población" => 19
+            "población" => 19,
+            "ciudades" => [
+                "Puente Alto",
+                "Maipú",
+                "Santa Fe",
+                "Quilmes"
+            ]
         ],
 
      ];
