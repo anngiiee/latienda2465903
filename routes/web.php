@@ -116,3 +116,7 @@ Route::get('paises' , function() {
 
 });
 
+Route::get('prueba', function(){
+    return view('productos.new');
+});
+
