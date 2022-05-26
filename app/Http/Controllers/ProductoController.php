@@ -7,6 +7,7 @@ use App\Models\Categoria;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
@@ -45,9 +46,58 @@ class ProductoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $r)
     {
-       //
+
+        //1.establecer las reglas de validación que apliquen a cada campo
+        $reglas=[
+            "nombre" => 'required|alpha',
+            "desc" => 'required|min:20|max:50',
+            "precio" => 'required|numeric',
+            "marca" => 'required',
+            "categoria" => 'required'
+        ];
+
+        //mensajes
+        $mensajes = [
+            "required" => "Campo obligatorio",
+            "alpha" => "Solo letras",
+            "min" => "Se requier una descripción con mínimo 20 caracteres",
+            "numeric" => "Solo números"
+        ];
+
+        //2. Crear el objeto validador
+        $v = Validator::make($r->all() , 
+                             $reglas, 
+                            $mensajes);
+
+        //3. Validar la input data
+        if($v->fails()){
+            //validación fallida
+            //redireccionar al formulario
+            return redirect('productos/create')
+                    ->withErrors($v)
+                    ->withInput();
+
+        }else{
+        //validación correcta
+            //Crear un nuevo producto <<entity>>
+            $p = new Producto;
+            //asignar valores a los atributos del producto
+            $p->nombre = $r->nombre;
+            $p->desc = $r->desc;
+            $p->precio = $r->precio;
+            $p->marca_id = $r->marca;
+            $p->categoria_id = $r->categoria;
+            //guardar en db
+            $p->save();
+            echo "producto registrado";
+            //redireccionar al formulario, con mensaje exitoso (session)
+            return redirect('productos/create')
+                ->with('mensajito', "Producto registrado");
+        }
+
+       
     }
 
     /**
