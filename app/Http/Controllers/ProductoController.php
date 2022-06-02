@@ -48,6 +48,10 @@ class ProductoController extends Controller
      */
     public function store(Request $r)
     {
+        //analizar la input data "imagen"
+
+        
+
 
         //1.establecer las reglas de validación que apliquen a cada campo
         $reglas=[
@@ -55,7 +59,8 @@ class ProductoController extends Controller
             "desc" => 'required|min:20|max:50',
             "precio" => 'required|numeric',
             "marca" => 'required',
-            "categoria" => 'required'
+            "categoria" => 'required',
+            "imagen" => 'required|image'
         ];
 
         //mensajes
@@ -63,7 +68,8 @@ class ProductoController extends Controller
             "required" => "Campo obligatorio",
             "alpha" => "Solo letras",
             "min" => "Se requier una descripción con mínimo 20 caracteres",
-            "numeric" => "Solo números"
+            "numeric" => "Solo números",
+            "image" => "Este campo solo admite imágenes"
         ];
 
         //2. Crear el objeto validador
@@ -80,12 +86,23 @@ class ProductoController extends Controller
                     ->withInput();
 
         }else{
+
+        //acceder a propiedades del archivo cargado
+                $archivo = $r->imagen;
+                $nombre_archivo = $archivo ->getClientOriginalName();
+            //establecer la ubicacion donde se cargará/ almacenará el archivo
+                $ruta=public_path()."/img/";
+            //mover el archivo
+                $archivo->move( $ruta,
+                                $nombre_archivo);
+
         //validación correcta
             //Crear un nuevo producto <<entity>>
             $p = new Producto;
             //asignar valores a los atributos del producto
             $p->nombre = $r->nombre;
             $p->desc = $r->desc;
+            $p->imagen = $nombre_archivo;
             $p->precio = $r->precio;
             $p->marca_id = $r->marca;
             $p->categoria_id = $r->categoria;
@@ -94,7 +111,7 @@ class ProductoController extends Controller
             echo "producto registrado";
             //redireccionar al formulario, con mensaje exitoso (session)
             return redirect('productos/create')
-                ->with('mensajito', "Producto registrado");
+               ->with('mensajito', "Producto registrado");
         }
 
        

@@ -9,7 +9,7 @@
     <h1 class="blue-grey-text text-darken-3">Nuevo producto</h1>
 </div>
 <div class="row">
-    <form method="POST" action="{{ route('productos.store') }}" class="col s8">
+    <form method="POST" action="{{ route('productos.store') }}" class="col s8" enctype="multipart/form-data">
         @csrf 
         <div class="row">
             <div class="input-field col s8">
@@ -70,6 +70,7 @@
                     <input class="file-path validate" type="text" placeholder="Suba aquí la imagen del producto">
                 </div>
             </div>
+            <span class="red-text text-darken-4"> {{ $errors->first('imagen') }} </span>
         </div>
         <div class="row">
             <button class="btn waves-effect waves-light" type="submit">Guardar
