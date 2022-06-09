@@ -129,7 +129,11 @@ class ProductoController extends Controller
      */
     public function show($producto) //parametro
     {
-        echo "Aquí van los detalles de producto con id: $producto";
+    //seleccionar el producto con id
+        $producto = Producto::find($producto);
+    //mostrar la vista de detalles, llevandole el producto seleccionado
+        return view('productos.show')
+                ->with('producto' , $producto);
     }
 
     /**
@@ -140,7 +144,7 @@ class ProductoController extends Controller
      */
     public function edit($producto) //Se quita el Producto antes del $
     {
-        echo "Aquí va a ir el formulario para actualizar el producto: $producto";
+        echo"aquí va a ir el formulario para actualizar el rpoducto: $producto";
     }
 
     /**

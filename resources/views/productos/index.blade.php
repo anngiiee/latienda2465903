@@ -20,15 +20,15 @@
 
         <div class="card-content">
           <span class="card-title activator grey-text text-darken-4">{{ $producto->nombre }}<i class="material-icons right">more_vert</i></span>
-          <p><a href="#">Ver detalles...</a></p>
+          <p><a href="{{ url ('productos/'.$producto->id) }}">Ver detalles...</a></p>
         </div>
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">{{ $producto->nombre }}<i class="material-icons right">close</i></span>
           <ul>
               <li>Descripción: {{ $producto->desc }}</li>
               <li>Precio: {{ $producto->precio }}</li>
-              <li>Categoría: {{ $producto->categoria()->nombre }}</li>
-              <li>Marca {{ $producto->marca_id }}</li>
+              <li>Categoría: {{ $producto->categoria->nombre }}</li>
+              <li>Marca {{ $producto->marca->nombre }}</li>
           </ul>
         </div>
       </div>
